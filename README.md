@@ -7,10 +7,10 @@ This a C++ port of [whereami](https://github.com/gpakosz/whereami).
 ### API ref
 ```c++
 namespace whereami {
-	/// Returns the full path of the current executable
+	/// Returns the full path of the current executable or an empty string on failure
   std::string executable_path();
 
-	/// Returns the full path of the current module
+	/// Returns the full path of the current module or an empty string on failure
   std::string module_path();
 }
 ```
