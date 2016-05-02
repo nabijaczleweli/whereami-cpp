@@ -25,6 +25,11 @@
 			"path": "include"
 		},
 		{
+			"follow_symlinks": true,
+			"name": "External",
+			"path": "external"
+		},
+		{
 			"file_include_patterns":
 			[
 				"*Makefile*"

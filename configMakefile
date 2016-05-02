@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 
-# Copyright (c) 2015 nabijaczleweli
+# Copyright (c) 2016 nabijaczleweli
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy of
 # this software and associated documentation files (the "Software"), to deal in
@@ -40,4 +40,5 @@ endif
 OBJ := .o
 ARCH := .a
 AR := ar
-CPPAR := -pedantic -O3 -fomit-frame-pointer -std=c++14 -Wall -Wextra -pipe $(PIC)
+CXXAR := -pedantic -O3 -fomit-frame-pointer -std=c++14 -Wall -Wextra -pipe $(PIC)
+CAR := -pedantic -O3 -fomit-frame-pointer -std=c11 -Wall -Wextra -pipe $(PIC)

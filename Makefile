@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 
-# Copyright (c) 2015 nabijaczleweli
+# Copyright (c) 2016 нabijaczleweli
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy of
 # this software and associated documentation files (the "Software"), to deal in
@@ -23,27 +23,36 @@
 include configMakefile
 
 
-SOURCES = $(wildcard source/*.cpp)
+SOURCES := $(wildcard source/*.cpp)
 
 
-.PHONY : clean all dll stlib
+.PHONY : clean all whereami dll stlib
 
-all : dll stlib
+all : whereami dll stlib
 
 clean :
 	rm -rf $(BUILD)
 
-dll : $(BUILD)/$(PREDLL)whereami++$(DLL)
-stlib : $(BUILD)/libwhereami++$(ARCH)
+whereami : $(BUILD)/lib/libwhereami$(ARCH)
+dll : whereami $(BUILD)/$(PREDLL)whereami++$(DLL)
+stlib : whereami $(BUILD)/libwhereami++$(ARCH)
 
+
+$(BUILD)/lib/libwhereami$(ARCH) : $(BUILD)/obj/whereami/whereami.o
+	@mkdir -p $(dir $@)
+	ar crs $@ $^
+
+$(BUILD)/obj/whereami/whereami.o : external/whereami/src/whereami.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CAR) -isystemexternal/whereami/src -c -o$@ $^
 
 $(BUILD)/$(PREDLL)whereami++$(DLL) : $(patsubst source/%.cpp,$(BUILD)/obj/%$(OBJ),$(SOURCES))
-	$(CXX) $(CPPAR) -shared -o$@ $^
+	$(CXX) $(CXXAR) -L$(BUILD)/lib -shared -o$@ $^ -lwhereami
 
-$(BUILD)/libwhereami++$(ARCH) : $(patsubst source/%.cpp,$(BUILD)/obj/%$(OBJ),$(SOURCES))
+$(BUILD)/libwhereami++$(ARCH) : $(patsubst source/%.cpp,$(BUILD)/obj/%$(OBJ),$(SOURCES)) $(BUILD)/obj/whereami/whereami.o
 	ar crs $@ $^
 
 
 $(BUILD)/obj/%$(OBJ) : source/%.cpp
 	@mkdir -p $(dir $@)
-	$(CXX) $(CPPAR) -Iinclude -c -o$@ $^
+	$(CXX) $(CXXAR) -Iinclude -Iexternal/whereami/src -c -o$@ $^
