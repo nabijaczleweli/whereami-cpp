@@ -2,8 +2,14 @@
 	"build_systems":
 	[
 		{
-			"cmd": "make -C\"$project_path\" all",
+			"working_dir": "$project_path",
+			"cmd": "make -j8",
 			"name": "Build whereami-cpp"
+		},
+		{
+			"working_dir": "$project_path",
+			"cmd": "make -j8 clean",
+			"name": "Clean whereami-cpp"
 		}
 	],
 	"folders":
