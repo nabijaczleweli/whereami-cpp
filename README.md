@@ -2,3 +2,15 @@
 Locate the current executable and the current module on the file system, in C++
 
 This a C++ port of [whereami](https://github.com/gpakosz/whereami).
+
+
+### API ref
+```c++
+namespace whereami {
+	/// Returns the full path of the current executable
+  std::string executable_path();
+
+	/// Returns the full path of the current module
+  std::string module_path();
+}
+```

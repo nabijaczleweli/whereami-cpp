@@ -21,3 +21,27 @@
 
 
 #include "whereami++.hpp"
+#include "whereami.h"
+
+
+using whereami_func_t = int (*)(char * out, int capacity, int * dirname_length);
+
+
+static std::string whereami_path(whereami_func_t whereami_func) {
+	const auto length = whereami_func(nullptr, 0, nullptr);
+	if(length == -1)
+		return "";
+
+	std::string ret(length, '\0');
+	whereami_func(&ret[0], length, nullptr);
+	return ret;
+}
+
+
+std::string whereami::executable_path() {
+	return whereami_path(wai_getExecutablePath);
+}
+
+std::string whereami::module_path() {
+	return whereami_path(wai_getModulePath);
+}

@@ -26,4 +26,7 @@
 #include <string>
 
 
-namespace whereami {}
+namespace whereami {
+	std::string executable_path();
+	std::string module_path();
+}
