@@ -20,17 +20,9 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ifeq "$(OS)" "Windows_NT"
-	PREDLL :=
-	DLL := .dll
 	PIC :=
 else
-	PREDLL := lib
 	PIC := -fPIC
-	ifeq "$(OS)" "Darwin"
-		DLL := .dylib
-	else
-		DLL := .so
-	endif
 endif
 
 ifeq "$(BUILD)" ""
