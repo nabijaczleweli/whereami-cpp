@@ -1,12 +1,4 @@
-Cpponfiguration
-===============
+# whereami-cpp [![Build status](https://travis-ci.org/nabijaczleweli/whereami-cpp.svg?branch=master)](https://travis-ci.org/nabijaczleweli/whereami-cpp) [![Licence](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+Locate the current executable and the current module on the file system, in C++
 
-Implementation of NBT file format in C++
-
-
-### Notes
-
-* Contrary to GitHub's belief, there is no JavaScript involved in this project.
-* NBT - Named Binary Tag - data format used by [Minecraft](en.wikipedia.org/wiki/Minecraft)
-* Saved data might not be binary compitibile with the original
-* Data format is based on [this](minecraft.gamepedia.com/Nbt) minecraftwiki entry
+This a C++ port of [whereami](https://github.com/gpakosz/whereami).
