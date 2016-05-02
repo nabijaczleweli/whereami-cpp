@@ -1,0 +1,39 @@
+{
+	"build_systems":
+	[
+		{
+			"cmd": "make -C\"$project_path\" all",
+			"name": "Build whereami-cpp"
+		}
+	],
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"name": "Source",
+			"path": "source"
+		},
+		{
+			"follow_symlinks": true,
+			"name": "Headers",
+			"path": "include"
+		},
+		{
+			"file_include_patterns":
+			[
+				"*Makefile*"
+			],
+			"folder_exclude_patterns":
+			[
+				"*"
+			],
+			"follow_symlinks": true,
+			"name": "Makefiles",
+			"path": "."
+		}
+	],
+	"settings":
+	{
+		"tab_size": 2
+	}
+}

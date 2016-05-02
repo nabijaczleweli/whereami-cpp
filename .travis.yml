@@ -1,0 +1,38 @@
+sudo: false
+language: generic
+cache: apt
+
+matrix:
+  include:
+    - env: CXX=g++-5 CC=gcc-5 DEPLOY=true
+      addons:
+        apt:
+          packages:
+            - g++-5
+          sources: &sources
+            - llvm-toolchain-precise-3.8
+            - ubuntu-toolchain-r-test
+    - env: CXX=clang++-3.8 CC=clang-3.8
+      addons:
+        apt:
+          packages:
+            - clang-3.8
+          sources: *sources
+
+script: make
+
+before_deploy:
+  - mkdir "$HOME/whereami++"
+  - find out -maxdepth 1 -type f -exec cp -t "$HOME/whereami++" {} +
+  - pushd "$HOME/whereami++"
+  - tar -caf whereami++.tbz2 whereami++
+  - popd
+
+deploy:
+  provider: releases
+  api_key:
+    secure: pkw15wtezWcrGCxdqKS+Hy2AoHrMMzcFKmd87x+BBmi5BtIrt7vz7RNdvYiCexptf4v522GdqDvMrh++TwgmKiT2Zt3YS4JEbm+lVFagZ9h67wEQtRjhJyZBYKDHyu5AYaruS8L4w8RmhJphpTlgDCRWWCUfXEF2cGofT6xhkeiTGxkDNiFK670+1L+VEHVjlzNCn5K9HTSP7P2z+5F/LyVfG+AIVptilpOq+U2HEuNcPbHxISgkQYKr1mw0Ex7ig1+4vlKRIZgZQ35SXDqmqd5gywUFQ/NZ6+E3+OSqA/P2pAauMtLbrFVaNBtCm7d8PJTvoJGohGaijugQ1srEWnJvl0BQR46RZii/sKDl/2Sg6Ngws2eFlgIoUPtLJiLd9zLwSibeW8A15KJILx0lBINrzU4URYDEI9k8Rtzh6e7xmrSZYQ32Ujo3thhqS+CUf0bbZJwb6Biw43893U382bVFdpzSkPFekNuM1IFat7Yon38H4UxgFfk38gOHjTv2n6fXAgWG8bRjaUWdcuxKcyOh+jsSC3SBcSWYYMXDFOlc5s65T6Xl065n2vBu9NKm2bBZOmae+4LijV8gJyQaM4GeiHZJPVDtMKdD+0+re8tZEbzbbb8xfwO6e3OD6xEslGwb2gPOQGEmZZOWo/SvCtKg/OpBToIONqjcRklkLu8=
+  file: "$HOME/whereami++.tbz2"
+  on:
+    tags: true
+    condition: $DEPLOY = true
