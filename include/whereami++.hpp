@@ -29,4 +29,10 @@
 namespace whereami {
 	std::string executable_path();
 	std::string module_path();
+
+	std::string executable_name();
+	std::string module_name();
+
+	std::string executable_dir();
+	std::string module_dir();
 }
