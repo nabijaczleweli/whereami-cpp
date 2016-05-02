@@ -24,8 +24,8 @@ script: make
 before_deploy:
   - mkdir -p "$HOME/whereami++/build"
   - find out -maxdepth 1 -type f -exec cp -t "$HOME/whereami++/build" {} +
-  - cp -r include "HOME/whereami++"
-  - pushd "$HOME/whereami++"
+  - cp -r include "$HOME/whereami++"
+  - pushd "$HOME"
   - tar -caf "whereami++.tbz2" "whereami++"
   - popd
 

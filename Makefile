@@ -33,19 +33,15 @@ all : whereami stlib
 clean :
 	rm -rf $(BUILD)
 
-whereami : $(BUILD)/lib/libwhereami$(ARCH)
-stlib : whereami $(BUILD)/libwhereami++$(ARCH)
+whereami : $(BUILD)/obj/whereami/whereami$(OBJ)
+stlib : $(BUILD)/libwhereami++$(ARCH)
 
 
-$(BUILD)/lib/libwhereami$(ARCH) : $(BUILD)/obj/whereami/whereami$(OBJ)
+$(BUILD)/libwhereami++$(ARCH) : $(patsubst source/%.cpp,$(BUILD)/obj/%$(OBJ),$(SOURCES)) $(BUILD)/obj/whereami/whereami$(OBJ)
 	@mkdir -p $(dir $@)
 	ar crs $@ $^
 
-$(BUILD)/libwhereami++$(ARCH) : $(patsubst source/%.cpp,$(BUILD)/obj/%$(OBJ),$(SOURCES)) $(BUILD)/obj/whereami/whereami.o
-	@mkdir -p $(dir $@)
-	ar crs $@ $^
-
-$(BUILD)/obj/whereami/whereami.o : external/whereami/src/whereami.c
+$(BUILD)/obj/whereami/whereami$(OBJ) : external/whereami/src/whereami.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CAR) -isystemexternal/whereami/src -DPATH_MAX=4096 -c -o$@ $^
 
