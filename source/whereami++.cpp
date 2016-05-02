@@ -51,9 +51,10 @@ static std::pair<std::string, std::string> whereami_segmented(whereami_func_t wh
 	if(length == -1)
 		return {"", ""};
 
+	// Mispadding correction breaks libcode here and is unnecessary because we're constructing via C-string anyway
 	int path_length;
-	std::string buf(length - WHEREAMI_CPP_MISPADDING, '\0');
-	whereami_func(&buf[0], length - WHEREAMI_CPP_MISPADDING, &path_length);
+	std::string buf(length, '\0');
+	whereami_func(&buf[0], length, &path_length);
 	return {{buf.c_str(), static_cast<std::size_t>(path_length)}, &buf[path_length + 1]};
 }
 
