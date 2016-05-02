@@ -44,7 +44,7 @@ $(BUILD)/lib/libwhereami$(ARCH) : $(BUILD)/obj/whereami/whereami.o
 
 $(BUILD)/obj/whereami/whereami.o : external/whereami/src/whereami.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CAR) -isystemexternal/whereami/src -c -o$@ $^
+	$(CC) $(CAR) -isystemexternal/whereami/src -DPATH_MAX=4096 -c -o$@ $^
 
 $(BUILD)/$(PREDLL)whereami++$(DLL) : $(patsubst source/%.cpp,$(BUILD)/obj/%$(OBJ),$(SOURCES))
 	$(CXX) $(CXXAR) -L$(BUILD)/lib -shared -o$@ $^ -lwhereami
