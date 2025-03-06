@@ -25,14 +25,6 @@
 #include <utility>
 
 
-// wai_get*Path returns an incorrect length on Windows (1 more than required)
-#ifdef _WIN32
-#define WHEREAMI_CPP_MISPADDING 1
-#else
-#define WHEREAMI_CPP_MISPADDING 0
-#endif
-
-
 using whereami_func_t = int (*)(char * out, int capacity, int * dirname_length);
 
 
@@ -41,8 +33,8 @@ static std::string whereami_path(whereami_func_t whereami_func) {
 	if(length == -1)
 		return "";
 
-	std::string ret(length - WHEREAMI_CPP_MISPADDING, '\0');
-	whereami_func(&ret[0], length - WHEREAMI_CPP_MISPADDING, nullptr);
+	std::string ret(length, '\0');
+	whereami_func(&ret[0], length, nullptr);
 	return ret;
 }
 
@@ -51,7 +43,6 @@ static std::pair<std::string, std::string> whereami_segmented(whereami_func_t wh
 	if(length == -1)
 		return {"", ""};
 
-	// Mispadding correction breaks libcode here and is unnecessary because we're constructing via C-string anyway
 	int path_length;
 	std::string buf(length, '\0');
 	whereami_func(&buf[0], length, &path_length);
