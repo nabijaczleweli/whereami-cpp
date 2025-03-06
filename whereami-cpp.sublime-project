@@ -26,6 +26,11 @@
 		},
 		{
 			"follow_symlinks": true,
+			"name": "Examples",
+			"path": "example"
+		},
+		{
+			"follow_symlinks": true,
 			"name": "External",
 			"path": "external"
 		},

@@ -24,20 +24,23 @@ include configMakefile
 
 
 SOURCES := $(wildcard source/*.cpp)
+EXAMPLE := $(wildcard example/*.cpp)
 
 
-.PHONY : clean all whereami stlib
+.PHONY : clean all whereami stlib example
+.SECONDARY :
 
-all : whereami stlib
+all : whereami stlib example
 
 clean :
 	rm -rf $(BUILD)
 
 whereami : $(BUILD)/obj/whereami/whereami$(OBJ)
 stlib : $(BUILD)/libwhereami++$(ARCH)
+example : $(patsubst example/%.cpp,$(BUILD)/%$(EXE),$(EXAMPLE))
 
 
-$(BUILD)/libwhereami++$(ARCH) : $(patsubst source/%.cpp,$(BUILD)/obj/%$(OBJ),$(SOURCES)) $(BUILD)/obj/whereami/whereami$(OBJ)
+$(BUILD)/libwhereami++$(ARCH) : $(patsubst %.cpp,$(BUILD)/obj/%$(OBJ),$(SOURCES)) $(BUILD)/obj/whereami/whereami$(OBJ)
 	@mkdir -p $(dir $@)
 	ar crs $@ $^
 
@@ -46,6 +49,9 @@ $(BUILD)/obj/whereami/whereami$(OBJ) : external/whereami/src/whereami.c
 	$(CC) $(CAR) -isystemexternal/whereami/src -DPATH_MAX=4096 -c -o$@ $^
 
 
-$(BUILD)/obj/%$(OBJ) : source/%.cpp
+$(BUILD)/%$(EXE) : $(BUILD)/obj/example/%$(OBJ) stlib
+	$(CXX) $(CXXAR) -L$(BUILD) -o$@ $< -lwhereami++
+
+$(BUILD)/obj/%$(OBJ) : %.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXAR) -Iinclude -Iexternal/whereami/src -c -o$@ $^

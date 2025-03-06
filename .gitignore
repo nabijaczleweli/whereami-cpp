@@ -3,6 +3,8 @@
 !source/**
 !include
 !include/**
+!example
+!example/**
 !external
 !external/**
 !.git*

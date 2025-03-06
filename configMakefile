@@ -21,8 +21,10 @@
 
 ifeq "$(OS)" "Windows_NT"
 	PIC :=
+	EXE := .exe
 else
 	PIC := -fPIC
+	EXE :=
 endif
 
 ifeq "$(BUILD)" ""
